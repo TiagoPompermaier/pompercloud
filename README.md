@@ -4,7 +4,8 @@ Documentação dos módulos do PomperCloud, feita com [Astro](https://astro.buil
 Serve a dois públicos com o mesmo conteúdo:
 
 - **Usuários:** site com menu, busca e modo escuro.
-- **Agentes da Aila (FluxaChat):** um índice `search-index.json` por módulo, lido pela ferramenta "Pesquisar AstroDocs".
+- **Agentes da Aila (FluxaChat):** um índice `search-index.json` por módulo, no formato exigido pela ferramenta "Pesquisar AstroDocs", validado a cada build.
+- **Outras IAs:** cada página também existe em Markdown puro (ex.: `/rdfin/o-que-e.md`).
 
 ## Estrutura
 
@@ -15,7 +16,7 @@ src/content/docs/            ← TODO o conteúdo fica aqui
 └── ficha-de-admissao/       ← módulo Admissão    → /ficha-de-admissao/search-index.json
 
 src/content.config.ts        ← campos do cabeçalho das páginas (palavras_chave, tipo...)
-src/lib/indice-agente.ts     ← formato do índice dos agentes (ajustar após resposta da Demander)
+src/lib/indice-agente.ts     ← monta e valida o índice dos agentes (formato do FluxaChat)
 src/pages/                   ← gera os índices automaticamente
 src/styles/pompermaier.css   ← cores da Pompermaier
 astro.config.mjs             ← nome do site, domínio e menu lateral
@@ -66,3 +67,5 @@ Passo a passo da configuração inicial: `docs-internos/PUBLICAR-NO-SERVIDOR.md`
 - Página com `✏️ PREENCHER` aparece no site, mas **não entra** no índice dos agentes.
 - Página com `indexar_agente: false` também fica fora do índice.
 - Se um campo do cabeçalho estiver errado, o build falha e nada é publicado.
+- Se algum trecho do índice violar as regras do FluxaChat, o build falha e nada é publicado (o FluxaChat rejeitaria o índice inteiro).
+- Página com mais de ~6.000 caracteres gera um aviso no build, sugerindo dividir.

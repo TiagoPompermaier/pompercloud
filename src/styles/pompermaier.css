@@ -5,14 +5,14 @@
   --sl-color-accent-low: #eff4e8;
   --sl-color-accent: #2c6b33;
   --sl-color-accent-high: #16351b;
-  --sl-color-white: #1f2a1c;
+  --sl-color-white: #1f2a1c;   /* texto principal */
   --sl-color-gray-1: #2b3628;
   --sl-color-gray-2: #45503f;
-  --sl-color-gray-3: #63705f;
+  --sl-color-gray-3: #63705f;  /* texto de apoio */
   --sl-color-gray-4: #8a957f;
   --sl-color-gray-5: #c9d3c0;
-  --sl-color-gray-6: #e4e9dd;
-  --sl-color-gray-7: #f3f6ef;
+  --sl-color-gray-6: #e4e9dd;  /* bordas */
+  --sl-color-gray-7: #f3f6ef;  /* fundos suaves */
   --sl-color-black: #ffffff;
 }
 
