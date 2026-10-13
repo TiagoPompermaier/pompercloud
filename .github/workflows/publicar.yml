@@ -1,0 +1,43 @@
+# Publica a Central de Ajuda em docs.pompermaiercont.com.br
+# Roda sozinho a cada alteração salva na branch "main" do GitHub.
+# Também pode ser disparado manualmente na aba "Actions" do repositório.
+
+name: Publicar documentação
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o conteúdo
+        uses: actions/checkout@v4
+
+      - name: Preparar o Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Montar o site
+        run: npm run build
+
+      - name: Enviar para o servidor (FTP)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVIDOR }}
+          username: ${{ secrets.FTP_USUARIO }}
+          password: ${{ secrets.FTP_SENHA }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./
